@@ -1,10 +1,8 @@
 require_relative '../lib/bike'
 
 class DockingStation
-  # def bike 
-  #   @bike # Return bikes we docked
-  # end
-  attr_reader :bike # Replaces method aboves
+
+  attr_reader :bike # Replaces method see_bike
 
   # def initialize
   #   @bikes = []
@@ -19,8 +17,8 @@ class DockingStation
     @bike = bike
   end
 
-  def see_bike
-    # @bikes.empty? ? false : true
-    @bikes
-  end
+  # def see_bike
+  #   # @bikes.empty? ? false : true
+  #   @bikes
+  # end
 end

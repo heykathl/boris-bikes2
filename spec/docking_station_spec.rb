@@ -42,14 +42,13 @@ describe DockingStation do
   # So I can decide whether to use the docking station
   # I want to see a bike that has been docked
   
-  describe "#see_bike" do
-    it { should respond_to(:see_bike)}
+  describe "#bike" do
+    it { should respond_to(:bike)}
 
     it "shows docked bikes" do
       bike = Bike.new
-      docking_station = DockingStation.new
-      docking_station.dock_bike(bike)
-      expect(docking_station.bike).to eq bike
+      subject.dock_bike(bike)
+      expect(subject.bike).to eq bike
     end 
 
     # it "should return true if there are bikes in the docking station" do
