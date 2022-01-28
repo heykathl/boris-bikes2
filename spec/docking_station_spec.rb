@@ -7,17 +7,18 @@ describe DockingStation do
   describe '#release_bike' do
 
     it { should respond_to(:release_bike) }
-
-    # Gets a bike and expects the bike to be working
     it "releases a bike that is working" do
-      bike = subject.release_bike
-      # can be written as:
-      # docking_station = DockingStation.new
-      # bike = docking_station.release_bike 
+      bike = Bike.new
+      subject.dock_bike(bike)
       expect(bike).to be_working # this is a predicate matcher
-      # can be written as: expect(bike.working?).to eq true
+      #   # can be written as: expect(bike.working?).to eq true
+      expect(subject.release_bike).to eq bike
+    end  
+
+    # # it "raises an error when there are no bikes available" do
+    # #   expect{subject.release_bike}.to raise_error "No bikes"
+    # end 
     end
-  end
 
   # it { is_expected.to respond_to(:bike) }
 
