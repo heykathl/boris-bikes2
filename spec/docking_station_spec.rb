@@ -8,12 +8,22 @@ describe DockingStation do
 
     it { should respond_to(:release_bike) }
 
-    # we want to write a test that gets a bike and expects the bike to be working
+    # Gets a bike and expects the bike to be working
     it "releases a bike that is working" do
       bike = subject.release_bike
-      expect(bike).to be_working
+      # can be written as:
+      # docking_station = DockingStation.new
+      # bike = docking_station.release_bike 
+      expect(bike).to be_working # this is a predicate matcher
+      # can be written as: expect(bike.working?).to eq true
     end
   end
+
+  # it { is_expected.to respond_to(:bike) }
+
+  # As a member of the public
+  # So I can return bikes I've hired
+  # I want to dock my bike at the docking station
 
   describe '#dock_bike' do
     it { should respond_to(:dock_bike)}
@@ -27,18 +37,29 @@ describe DockingStation do
       expect(subject.dock_bike(bike)).to be(bike)
     end 
   end 
+
+  # As a member of the public
+  # So I can decide whether to use the docking station
+  # I want to see a bike that has been docked
   
   describe "#see_bike" do
     it { should respond_to(:see_bike)}
 
-    it "should return true if there are bikes in the docking station" do
+    it "shows docked bikes" do
       bike = Bike.new
-      subject.dock_bike(bike)
-      expect(subject.see_bike).to be true
-    end
-    
-    it "should return false if there are no bikes in the docking station" do
-      expect(subject.see_bike).to be false
+      docking_station = DockingStation.new
+      docking_station.dock_bike(bike)
+      expect(docking_station.bike).to eq bike
     end 
-  end 
+
+    # it "should return true if there are bikes in the docking station" do
+    #   bike = Bike.new
+    #   subject.dock_bike(bike)
+    #   expect(subject.see_bike).to be true
+    # end
+    
+    # it "should return false if there are no bikes in the docking station" do
+    #   expect(subject.see_bike).to be false
+    # end 
+  end
 end
