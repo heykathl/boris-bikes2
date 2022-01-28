@@ -9,7 +9,12 @@ class DockingStation
   # end 
 
   def release_bike
-    @bike
+    if @bike.nil? 
+      fail "No bikes"
+    else
+    # fail 'No bikes' unless @bike
+      @bike
+    end
   end
 
   def dock_bike(bike)
