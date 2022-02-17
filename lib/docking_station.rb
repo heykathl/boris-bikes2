@@ -1,29 +1,20 @@
 require_relative '../lib/bike'
 
 class DockingStation
-
-  attr_reader :bike # Replaces method see_bike
-
-  # def initialize
-  #   @bikes = []
-  # end 
-
-  def release_bike
-    if @bike.nil? 
-      fail "No bikes"
-    else
-    # fail 'No bikes' unless @bike
-      @bike
-    end
-  end
-
-  def dock_bike(bike)
-    # @bikes << bike
-    @bike = bike
-  end
-
-  # def see_bike
+  # def bike
   #   # @bikes.empty? ? false : true
   #   @bikes
   # end
+  attr_reader :bikes # Replaces method bike above
+
+  def release_bike
+    raise 'No bikes available' unless @bikes
+    @bikes
+  end
+
+  def dock_bike(bike)
+    raise "Docking station is full" if @bikes
+    @bikes = bike
+  end
+
 end
