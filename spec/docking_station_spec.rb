@@ -12,7 +12,7 @@ describe DockingStation do
     it "releases a bike" do
       bike = Bike.new
       subject.dock_bike(bike)
-      expect(subject.release_bike).to eq bike
+      expect(subject.release_bike).to contain_exactly(bike)
     end
 
     # As a person,
@@ -34,7 +34,7 @@ describe DockingStation do
       expect { subject.release_bike }.to raise_error("No bikes available") 
     end
 
-    end
+  end
 
   # As a member of the public
   # So I can return bikes I've hired
@@ -48,8 +48,27 @@ describe DockingStation do
 
     it "should dock a bike" do
       bike = Bike.new
-      expect(subject.dock_bike(bike)).to be(bike)
+      subject.dock_bike(bike)
+      expect(subject.bikes).to match_array(bike)
     end 
+
+    # As a maintainer of the system,
+    # So that I can control the distribution of bikes,
+    # I'd like docking stations not to accept more bikes than their capacity.
+    # it "raises error if docking station reaches capacity of 1" do
+    #   bike = Bike.new
+    #   subject.dock_bike(bike)
+    #   expect { subject.dock_bike(bike) }.to raise_error("Docking station is full") 
+    # end
+
+    # As a system maintainer,
+    # So that I can plan the distribution of bikes,
+    # I want a docking station to have a default capacity of 20 bikes.
+    it "has default capacity of 20" do
+      bike = Bike.new
+      20.times { subject.dock_bike(bike) }
+      expect { subject.dock_bike(bike) }.to raise_error("Docking station is full") 
+    end
   end 
 
   # As a member of the public
@@ -62,17 +81,7 @@ describe DockingStation do
     it "shows docked bikes" do
       bike = Bike.new
       subject.dock_bike(bike)
-      expect(subject.bikes).to eq bike
+      expect(subject.bikes).to match_array(bike)
     end 
-
-    # As a maintainer of the system,
-    # So that I can control the distribution of bikes,
-    # I'd like docking stations not to accept more bikes than their capacity.
-
-    it "raises error if docking station reaches capacity of 1" do
-      bike = Bike.new
-      subject.dock_bike(bike)
-      expect { subject.dock_bike(bike) }.to raise_error("Docking station is full") 
-    end
   end
 end
