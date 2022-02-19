@@ -6,6 +6,7 @@ class DockingStation
   #   @bikes
   # end
   attr_reader :bikes # Replaces method bike above
+  DEFAULT_CAPACITY = 20
 
   def initialize
     @bikes = []
@@ -22,13 +23,13 @@ class DockingStation
   end
 
   private
-  
+
   def full?
-    return true if @bikes.length >= 20
+    @bikes.length >= DEFAULT_CAPACITY
   end
 
   def empty?
-    return true if @bikes.length == 0
+    @bikes.length == 0
   end
 
 end
