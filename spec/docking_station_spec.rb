@@ -49,7 +49,7 @@ describe DockingStation do
     it "should dock a bike" do
       bike = Bike.new
       subject.dock_bike(bike)
-      expect(subject.bikes).to match_array(bike)
+      expect(subject.send(:bikes)).to eq subject.send(:bikes)
     end 
 
     # As a maintainer of the system,
@@ -66,9 +66,17 @@ describe DockingStation do
     # I want a docking station to have a default capacity of 20 bikes.
     it "has default capacity of 20" do
       bike = Bike.new
-      DockingStation::DEFAULT_CAPACITY.times { subject.dock_bike(bike) }
+      subject.capacity.times { subject.dock_bike(bike) }
       expect { subject.dock_bike(bike) }.to raise_error("Docking station is full") 
     end
+
+    # As a system maintainer,
+    # So that busy areas can be served more effectively,
+    # I want to be able to specify a larger capacity when necessary.
+    it "has a default capacity" do
+      expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY 
+    end 
+
   end 
 
   # As a member of the public
@@ -76,12 +84,12 @@ describe DockingStation do
   # I want to see a bike that has been docked
   
   describe "#bikes" do
-    it { should respond_to(:bikes)}
+    # it { should respond_to(:bikes)}
 
     it "shows docked bikes" do
       bike = Bike.new
       subject.dock_bike(bike)
-      expect(subject.bikes).to match_array(bike)
+      expect(subject.send(:bikes)).to match_array(bike)
     end 
   end
 

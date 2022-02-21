@@ -1,35 +1,42 @@
 require_relative '../lib/bike'
 
 class DockingStation
-  # def bike
-  #   # @bikes.empty? ? false : true
-  #   @bikes
-  # end
-  attr_reader :bikes # Replaces method bike above
+
+  # def capacity
+  #   DEFAULT_CAPACITY
+  # end 
+
+  attr_reader :capacity # Replaces method above
   DEFAULT_CAPACITY = 20
 
   def initialize
     @bikes = []
+    @capacity = DEFAULT_CAPACITY
   end
 
   def release_bike
     raise 'No bikes available' if empty?
-    @bikes
+    bikes
   end
 
   def dock_bike(bike)
     raise "Docking station is full" if full?
-    @bikes << bike
+    bikes << bike
   end
-
+  
   private
-
+  # def bike
+  #   @bikes
+  # end
+   # Replaces method bike above
+   attr_reader :bikes
+   
   def full?
-    @bikes.length >= DEFAULT_CAPACITY
+    bikes.length >= capacity
   end
 
   def empty?
-    @bikes.length == 0
+    bikes.length == 0
   end
 
 end
