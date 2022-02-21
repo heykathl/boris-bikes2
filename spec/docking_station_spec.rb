@@ -77,6 +77,11 @@ describe DockingStation do
       expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY 
     end 
 
+    it "can change capacity when instance of dockingstation is created" do
+      dockingstation = DockingStation.new(10)
+      expect(dockingstation.capacity). to eq 10
+    end
+
   end 
 
   # As a member of the public
