@@ -12,7 +12,7 @@ describe DockingStation do
     it "releases a bike" do
       bike = Bike.new
       subject.dock_bike(bike)
-      expect(subject.release_bike).to contain_exactly(bike)
+      expect(subject.release_bike).to eq bike
     end
 
     # As a person,
@@ -33,6 +33,17 @@ describe DockingStation do
     it "raises error if no docked bikes available" do
       expect { subject.release_bike }.to raise_error("No bikes available") 
     end
+
+    # As a maintainer of the system,
+    # So that I can manage broken bikes and not disappoint users,
+    # I'd like docking stations not to release broken bikes.
+    
+    it "raise error when release broken bike" do
+      bike = Bike.new
+      bike.report
+      subject.dock_bike(bike)
+      expect { subject.release_bike }.to raise_error("No bikes available")
+    end 
 
   end
 
@@ -55,6 +66,7 @@ describe DockingStation do
     # As a maintainer of the system,
     # So that I can control the distribution of bikes,
     # I'd like docking stations not to accept more bikes than their capacity.
+
     # it "raises error if docking station reaches capacity of 1" do
     #   bike = Bike.new
     #   subject.dock_bike(bike)
@@ -64,6 +76,7 @@ describe DockingStation do
     # As a system maintainer,
     # So that I can plan the distribution of bikes,
     # I want a docking station to have a default capacity of 20 bikes.
+
     it "has default capacity of 20" do
       bike = Bike.new
       subject.capacity.times { subject.dock_bike(bike) }
@@ -73,6 +86,7 @@ describe DockingStation do
     # As a system maintainer,
     # So that busy areas can be served more effectively,
     # I want to be able to specify a larger capacity when necessary.
+
     it "has a default capacity" do
       expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY 
     end 
@@ -98,5 +112,6 @@ describe DockingStation do
     end 
   end
 
+  
 
 end

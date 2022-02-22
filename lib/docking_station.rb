@@ -12,11 +12,11 @@ class DockingStation
   def initialize(capacity=DEFAULT_CAPACITY)
     @bikes = []
     @capacity = capacity
-  end
+  end 
 
   def release_bike
-    raise 'No bikes available' if empty?
-    bikes
+    raise 'No bikes available' if empty? || bikes.last.working == false
+    bikes.pop
   end
 
   def dock_bike(bike)
