@@ -1,7 +1,8 @@
 require_relative '../lib/docking_station'
-# or require 'docking_station'
+require_relative '../lib/bike'
 
 describe DockingStation do
+  let(:bike) { double :bike }
   # As a person,
   # So that I can use a bike,
   # I'd like a docking station to release a bike.
@@ -10,7 +11,7 @@ describe DockingStation do
     it { is_expected.to respond_to(:release_bike) }
 
     it "releases a bike" do
-      bike = Bike.new
+      allow(bike).to receive(:working?).and_return(true)
       subject.dock_bike(bike)
       expect(subject.release_bike).to eq bike
     end
@@ -20,7 +21,7 @@ describe DockingStation do
     # I'd like to see if a bike is working
 
     it "releases working bike" do
-      bike = Bike.new
+      allow(bike).to receive(:working?).and_return(true)
       subject.dock_bike(bike)
       expect(bike).to be_working # this is a predicate matcher
       # can be written as: expect(bike.working?).to eq true
@@ -39,12 +40,10 @@ describe DockingStation do
     # I'd like docking stations not to release broken bikes.
     
     it "raise error when release broken bike" do
-      bike = Bike.new
-      bike.report
+      allow(bike).to receive(:working?).and_return(false)
       subject.dock_bike(bike)
-      expect { subject.release_bike }.to raise_error("No bikes available")
-    end 
-
+      expect{ subject.release_bike }.to raise_error("No bikes available")
+    end
   end
 
   # As a member of the public
@@ -52,15 +51,14 @@ describe DockingStation do
   # I want to dock my bike at the docking station
 
   describe '#dock_bike' do
-
     it "should accept a bike" do
       expect(subject).to respond_to(:dock_bike).with(1).argument
     end 
 
     it "should dock a bike" do
-      bike = Bike.new
+      allow(bike).to receive(:working?).and_return(true)
       subject.dock_bike(bike)
-      expect(subject.send(:bikes)).to eq subject.send(:bikes)
+      expect(subject.send(:bikes)).to include bike
     end 
 
     # As a maintainer of the system,
@@ -78,7 +76,6 @@ describe DockingStation do
     # I want a docking station to have a default capacity of 20 bikes.
 
     it "has default capacity of 20" do
-      bike = Bike.new
       subject.capacity.times { subject.dock_bike(bike) }
       expect { subject.dock_bike(bike) }.to raise_error("Docking station is full") 
     end
@@ -95,7 +92,6 @@ describe DockingStation do
       dockingstation = DockingStation.new(10)
       expect(dockingstation.capacity). to eq 10
     end
-
   end 
 
   # As a member of the public
@@ -106,7 +102,6 @@ describe DockingStation do
     # it { should respond_to(:bikes)}
 
     it "shows docked bikes" do
-      bike = Bike.new
       subject.dock_bike(bike)
       expect(subject.send(:bikes)).to match_array(bike)
     end 
