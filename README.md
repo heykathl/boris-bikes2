@@ -1,5 +1,4 @@
 # Boris Bikes
-=============
 To promote sustainable travel, TfL has introduced a program to deliver a rental bike system.
 
 ## Motivation
@@ -11,10 +10,10 @@ The purpose of this program is to emulate all docking stations, bikes and infras
 3. When the installation completes, run `bundle`
 
 ## Features
--Displays available bikes in a docking station
--Can release and dock bikes
--Reporting whether a bike is working or not
--Ensuring that bikes can be docked at a docking station where there is available capacity
+*Displays available bikes in a docking station
+*Can release and dock bikes
+*Reporting whether a bike is working or not
+*Ensuring that bikes can be docked at a docking station where there is available capacity
 
 ## Tests
 There are a series of tests which can be run with the following (from the directory):
